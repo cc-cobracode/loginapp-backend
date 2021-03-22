@@ -15,7 +15,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.httpBasic();
+        http.csrf()
+                .disable()
+                .authorizeRequests()
+                .antMatchers("/**").permitAll() // define your requests
+                .anyRequest()
+                .authenticated()
+                .and()
+                .httpBasic();
     }
 
     @Bean
